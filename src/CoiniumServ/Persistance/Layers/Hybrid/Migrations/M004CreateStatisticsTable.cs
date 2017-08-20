@@ -44,10 +44,23 @@ namespace CoiniumServ.Persistance.Layers.Hybrid.Migrations
                 .WithColumn("Attached").AsString().NotNullable()
                 .WithColumn("Value").AsDecimal(19,2).NotNullable()
                 .WithColumn("CreatedAt").AsDateTime().NotNullable();
+
+            Create.Index("stat_type").OnTable("Statistics")
+                .OnColumn("Type").Ascending();
+            
+            Create.Index("stat_domain").OnTable("Statistics")
+                .OnColumn("Domain").Ascending();
+            
+            Create.Index("stat_attached").OnTable("Statistics")
+                .OnColumn("Attached").Ascending();
         }
 
         public override void Down()
         {
+            Delete.Index("stat_type");
+            Delete.Index("stat_domain");
+            Delete.Index("stat_attached");
+            
             Delete.Table("Statistics");
         }
     }

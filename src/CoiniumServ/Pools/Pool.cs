@@ -410,7 +410,7 @@ namespace CoiniumServ.Pools
         {
             var dataToSave = new List<Dictionary<string, object>>();
 
-            
+            // POOL domain
             dataToSave.Add(new Dictionary<string, object>
             {
                 { "type", "miners_count" },
@@ -426,8 +426,8 @@ namespace CoiniumServ.Pools
                 { "attached", (string)Config.Coin.Name },
                 { "value", (decimal)Hashrate }
             });
-
             
+            // MINER domain
             foreach (var miner in MinersHashrate)
             {
                 dataToSave.Add(new Dictionary<string, object>
@@ -438,7 +438,66 @@ namespace CoiniumServ.Pools
                     { "value", (decimal)miner.Value }
                 });
             }
-
+            
+            // NETWORK domain
+            dataToSave.Add(new Dictionary<string, object>
+            {
+                { "type", "hashrate" },
+                { "domain", "network" },
+                { "attached", (string)Config.Coin.Name },
+                { "value", (decimal)NetworkInfo.Hashrate }
+            });
+            
+            dataToSave.Add(new Dictionary<string, object>
+            {
+                { "type", "difficulty" },
+                { "domain", "network" },
+                { "attached", (string)Config.Coin.Name },
+                { "value", (decimal)NetworkInfo.Difficulty }
+            });
+            
+            dataToSave.Add(new Dictionary<string, object>
+            {
+                { "type", "connections" },
+                { "domain", "network" },
+                { "attached", (string)Config.Coin.Name },
+                { "value", (decimal)NetworkInfo.Connections }
+            });
+            
+            // BLOCKS domain
+            dataToSave.Add(new Dictionary<string, object>
+            {
+                { "type", "pending" },
+                { "domain", "blocks" },
+                { "attached", (string)Config.Coin.Name },
+                { "value", (decimal)BlockRepository.Pending }
+            });
+            
+            dataToSave.Add(new Dictionary<string, object>
+            {
+                { "type", "confirmed" },
+                { "domain", "blocks" },
+                { "attached", (string)Config.Coin.Name },
+                { "value", (decimal)BlockRepository.Confirmed }
+            });
+            
+            dataToSave.Add(new Dictionary<string, object>
+            {
+                { "type", "orphaned" },
+                { "domain", "blocks" },
+                { "attached", (string)Config.Coin.Name },
+                { "value", (decimal)BlockRepository.Orphaned }
+            });
+            
+            dataToSave.Add(new Dictionary<string, object>
+            {
+                { "type", "total" },
+                { "domain", "blocks" },
+                { "attached", (string)Config.Coin.Name },
+                { "value", (decimal)BlockRepository.Total }
+            });
+            
+            // Commit the data to the database
             _storage.AddHistoricValue(dataToSave);
         }
     }

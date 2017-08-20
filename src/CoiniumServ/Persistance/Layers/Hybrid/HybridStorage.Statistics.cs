@@ -148,21 +148,29 @@ namespace CoiniumServ.Persistance.Layers.Hybrid
 
                 using (var connection = new MySqlConnection(_mySqlProvider.ConnectionString))
                 {
-                    _logger.Debug("{0}", data);
-                    
-                    foreach (var query in data)
+                    //_logger.Debug("{0}", data);
+                    var query = "INSERT INTO Statistics(Type, Domain, Attached, Value, CreatedAt) VALUES ";
+
+                    int cnt = 0;
+                    foreach (var dataRow in data)
                     {
-                        connection.Execute(
-                            @"INSERT INTO Statistics(Type, Domain, Attached, Value, CreatedAt) VALUES (@type, @domain, @attached, @value, @createdAt)",
-                            new
-                            {
-                                type = query["type"],
-                                domain = query["domain"],
-                                attached = query["attached"],
-                                value = query["value"],
-                                createdAt = TimeHelpers.NowInUnixTimestamp().UnixTimestampToDateTime()
-                            });
+
+                        var type = dataRow["type"];
+                        var domain = dataRow["domain"];
+                        var attached = dataRow["attached"];
+                        var value = dataRow["value"];
+                        var createdAt = TimeHelpers.NowInUnixTimestamp().UnixTimestampToDateTime().ToString("yyyy-MM-dd hh:mm:ss");
+                        
+                        query += $"('{type}', '{domain}', '{attached}', {value}, '{createdAt}')";
+
+                        if (cnt < data.Count - 1)
+                            query += ", ";
+
+                        cnt++;
                     }
+
+                    _logger.Debug("query: {0}", query);
+                    connection.Execute(query);
                 }
             }
             catch (Exception e)
