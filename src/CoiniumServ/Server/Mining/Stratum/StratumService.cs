@@ -27,6 +27,8 @@
 // 
 #endregion
 
+using System;
+using Serilog;
 using AustinHarris.JsonRpc;
 using CoiniumServ.Jobs;
 using CoiniumServ.Pools;
@@ -42,6 +44,7 @@ namespace CoiniumServ.Server.Mining.Stratum
     public class StratumService : JsonRpcService, IRpcService
     {
         private readonly IShareManager _shareManager;
+        protected static readonly ILogger _logger = Log.ForContext<StratumService>().ForContext("Component", "StratumService");
 
         public StratumService(IPoolConfig poolConfig, IShareManager shareManager):
             base(poolConfig.Coin.Name)

@@ -169,7 +169,7 @@ namespace CoiniumServ.Persistance.Layers.Hybrid
                         cnt++;
                     }
 
-                    _logger.Debug("query: {0}", query);
+                    //_logger.Debug("query: {0}", query);
                     connection.Execute(query);
                 }
             }

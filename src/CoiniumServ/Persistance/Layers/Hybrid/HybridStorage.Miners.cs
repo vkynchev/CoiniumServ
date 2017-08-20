@@ -46,8 +46,9 @@ namespace CoiniumServ.Persistance.Layers.Hybrid
                 string[] splittedUsername = miner.Username.Split(delimiterChars);
                 return _daemonClient.ValidateAddress(splittedUsername[0]).IsValid; // if so validate it against coin daemon as an address.
             }
-            catch (RpcException)
+            catch (RpcException e)
             {
+                _logger.Error(e,"RpcException while Authenticate");
                 return false;
             }
         }
