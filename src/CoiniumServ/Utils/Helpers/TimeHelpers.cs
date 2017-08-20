@@ -35,6 +35,11 @@ namespace CoiniumServ.Utils.Helpers
     {
         public static Int32 NowInUnixTimestamp()
         {
+            return (Int32)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+        }
+        
+        public static Int32 UtcNowInUnixTimestamp()
+        {
             return (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         }
 

@@ -159,7 +159,7 @@ namespace CoiniumServ.Persistance.Layers.Hybrid
                         var domain = dataRow["domain"];
                         var attached = dataRow["attached"];
                         var value = dataRow["value"];
-                        var createdAt = TimeHelpers.NowInUnixTimestamp().UnixTimestampToDateTime().ToString("yyyy-MM-dd hh:mm:ss");
+                        var createdAt = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                         
                         query += $"('{type}', '{domain}', '{attached}', {value}, '{createdAt}')";
 
