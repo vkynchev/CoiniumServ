@@ -304,9 +304,8 @@ namespace CoiniumServ.Server.Mining.Stratum.Sockets
                 {
                     try
                     {
-                        connection.Socket.Shutdown(SocketShutdown.Both);
+                        //connection.Socket.Shutdown(SocketShutdown.Both);
                         connection.Socket.Disconnect(true);
-                        //connection.Socket.Close();
                     }
                     catch(Exception ex)
                     {
