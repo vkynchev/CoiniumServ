@@ -141,7 +141,7 @@ namespace CoiniumServ.Persistance.Layers.Hybrid
                             offset = paginationQuery.Offset,
                             count = paginationQuery.Count
                         });
-
+                    
                     blocks.AddRange(results);
                 }
             }
